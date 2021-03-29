@@ -55,4 +55,15 @@ class SomeTest {
     assertEquals( lOk, l.takeRight(2))
     assertEquals( Nil(), Nil().takeRight(2))
   }
+
+  @Test
+  def testCollect() = {
+    val isEven: PartialFunction[Int, String] = {
+      case x if x % 2 == 0 => x+" is even"
+    }
+    val l = List(2,6,3,5)
+    val lOk = List("2 is even","6 is even")
+
+    assertEquals( lOk, l.collect(isEven))
+  }
 }
