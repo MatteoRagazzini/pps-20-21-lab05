@@ -41,10 +41,9 @@ class SomeTest {
   def reduce() = {
     val l = List(2,6,3,5)
     val h: List[Int] = Nil();
-    val ex:Executable = () => h.reduce(_+_)
 
 
-    //assertThrows(UnsupportedOperationException, ex)
+    assertThrows(classOf[UnsupportedOperationException], () => h.reduce(_+_))
     assertEquals(16, l.reduce(_+_))
   }
 }
