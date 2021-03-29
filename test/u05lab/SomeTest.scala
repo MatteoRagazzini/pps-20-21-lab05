@@ -2,6 +2,7 @@ package u05lab
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions._
+import org.junit.jupiter.api.function.Executable
 import u05lab.code._
 class SomeTest {
 
@@ -34,5 +35,16 @@ class SomeTest {
     val lNo = List(6,3,5)
 
     assertEquals((lOk, lNo), l.span(_<=3))
+  }
+
+  @Test
+  def reduce() = {
+    val l = List(2,6,3,5)
+    val h: List[Int] = Nil();
+    val ex:Executable = () => h.reduce(_+_)
+
+
+    //assertThrows(UnsupportedOperationException, ex)
+    assertEquals(16, l.reduce(_+_))
   }
 }
