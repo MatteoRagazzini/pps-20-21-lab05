@@ -1,5 +1,7 @@
 package u05lab.code
 
+
+import scala.::
 import scala.annotation.tailrec
 import scala.language.postfixOps // silence warnings
 
@@ -123,8 +125,6 @@ trait ListImplementation[A] extends List[A] {
     _zipRight(this, 0 , List.nil).reverse()
   }
 
-
-
   override def partition(pred: A => Boolean): (List[A],List[A]) = {
 
     def not[A](pred: A => Boolean): A => Boolean = (x:A) => !pred(x)
@@ -132,7 +132,16 @@ trait ListImplementation[A] extends List[A] {
     (this.filter(pred), this.filter(not(pred)))
   }
 
-  override def span(pred: A => Boolean): (List[A],List[A]) = ???
+  override def span(pred: A => Boolean): (List[A],List[A]) = {
+    @tailrec
+    // maintains in acc all the elements which past the predicate
+    def _span(l: List[A], acc:List[A]): (List[A],List[A]) = l match{
+      case h::t if pred(h)  => _span(t, h :: acc )
+        // the remaining elements stay in l
+      case _ => (acc.reverse(), l)
+  }
+    _span(this, Nil())
+  }
 
   /**
     *

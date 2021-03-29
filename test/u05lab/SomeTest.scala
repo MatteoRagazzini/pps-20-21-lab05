@@ -26,4 +26,13 @@ class SomeTest {
 
     assertEquals((lOk, lNo), l.partition(_<=3))
   }
+
+  @Test
+  def testSpan() = {
+    val l = List(1,2,6,3,5)
+    val lOk = List(1,2)
+    val lNo = List(6,3,5)
+
+    assertEquals((lOk, lNo), l.span(_<=3))
+  }
 }
