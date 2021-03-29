@@ -143,28 +143,31 @@ trait ListImplementation[A] extends List[A] {
     _span(this, Nil())
   }
 
-
-
   /**
     *
     * @throws UnsupportedOperationException if the list is empty
     */
-  override def reduce(op: (A,A)=>A): A = this match {
-    case Nil() => throw new UnsupportedOperationException
-    case h::t => {
+  override def reduce(op: (A,A)=>A): A = {
 
-      def _reduce(l: List[A], acc: A): A = l match {
-        case h::t => _reduce(t, op(acc, h))
-        case _ => acc
-      }
-      _reduce(t, h)
+    def _reduce(l: List[A], acc: A): A = l match {
+      case h :: t => _reduce(t, op(acc, h))
+      case _ => acc
     }
 
-
+    this match {
+      case Nil() => throw new UnsupportedOperationException
+      case h :: t => _reduce(t, h)
     }
+  }
 
-
-  override def takeRight(n: Int): List[A] = ???
+  override def takeRight(n: Int): List[A] = {
+    @tailrec
+    def _takeRight(l: List[A], acc: List[A], c: Int): List[A] = l match{
+      case h :: t if c > 0 => _takeRight(t, h :: acc, c=c-1)
+      case _ => acc
+    }
+    _takeRight(this.reverse(), Nil(), n)
+  }
 }
 
 // Factories

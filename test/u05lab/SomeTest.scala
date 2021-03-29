@@ -38,12 +38,21 @@ class SomeTest {
   }
 
   @Test
-  def reduce() = {
+  def testReduce() = {
     val l = List(2,6,3,5)
     val h: List[Int] = Nil();
 
 
     assertThrows(classOf[UnsupportedOperationException], () => h.reduce(_+_))
     assertEquals(16, l.reduce(_+_))
+  }
+
+  @Test
+  def testTakeRight() = {
+    val l = List(2,6,3,5)
+    val lOk = List(3,5)
+
+    assertEquals( lOk, l.takeRight(2))
+    assertEquals( Nil(), Nil().takeRight(2))
   }
 }
