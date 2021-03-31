@@ -48,13 +48,19 @@ object ExamsManager extends App {
 
 
     object ExamsManager {
-      var exams: Map[String, Map[String, ExamResult]] = ???
+      var map: Map[String, Map[String, ExamResult]] = Map.empty[String, Map[String, ExamResult]]
 
-      def createNewCall(call:String) = ???
+      def createNewCall(call:String) = map = map + (call -> Map.empty[String, ExamResult])
 
-      def addStudentResult(call: String, student: String, result: ExamResult) = ???
+      def addStudentResult(call: String, student: String, result: ExamResult) = {
+        if(map.contains(call)){
+          // io l'avrei fatto così
+//          map = map + (map(call) + (student -> result))
+          map = map + (call -> (map(call) + (student -> result)))
+        }
+      }
 
-      def getAllStudentsFromCall(call: String): Set[String] = ???
+      def getAllStudentsFromCall(call: String): Set[String] = map(call).keySet
 
       def getEvaluationsMapFromCall(call: String): Map[String, Int] = ???
 
