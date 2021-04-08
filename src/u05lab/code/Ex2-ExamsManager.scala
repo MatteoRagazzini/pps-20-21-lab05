@@ -62,42 +62,11 @@ object ExamsManager extends App {
 
       def getAllStudentsFromCall(call: String): Set[String] = map(call).keySet
 
-      def getEvaluationsMapFromCall(call: String): Map[String, Int] = ???
+      def getEvaluationsMapFromCall(call: String): Map[String, Int] = map(call).filter(m => m._2.evaluation.isDefined)  mapValues(er => er.evaluation.get)
 
-      def getResultsMapFromStudent(student: String): Map[String, Int] = ???
+      def getResultsMapFromStudent(student: String): Map[String, String] = map.filter(s=>s._2.contains(student)).map(s => s._1 -> s._2(student).toString)
 
-      def getBestResultFromStudent(student: String): Option[Int] = ???
+      def getBestResultFromStudent(student: String): Option[Int] = Some(map.filter(s=>s._2.contains(student) && s._2(student).evaluation.isDefined)
+        .map(s=> s._2(student).evaluation.get).max)
     }
-
-
-//  sealed trait ExamsManager {
-//    def createNewCall(call:String)
-//
-//    def addStudentResult(call: String, student: String, result: ExamResult)
-//
-//    def getAllStudentsFromCall(call: String): Set[String]
-//
-//    def getEvaluationsMapFromCall(call: String): Map[String, Int]
-//
-//    def getResultsMapFromStudent(student: String): Map[String, Int]
-//
-//    def getBestResultFromStudent(student: String): Option[Int]
-//  }
-//
-//
-//  abstract case class ExamsManagerImpl() extends ExamsManager{
-//    var exams: Map[String, Map[String, ExamResult]]
-//
-//    override def createNewCall(call: String): Unit = if(!exams.contains(call)) exams + (call -> Map.empty)
-//
-//    override def addStudentResult(call: String, student: String, result: ExamResult): Unit = ???
-//
-//    override def getAllStudentsFromCall(call: String): Set[String] = ???
-//
-//    override def getEvaluationsMapFromCall(call: String): Map[String, Int] = ???
-//
-//    override def getResultsMapFromStudent(student: String): Map[String, Int] = ???
-//
-//    override def getBestResultFromStudent(student: String): Option[Int] = ???
-//  }
 }

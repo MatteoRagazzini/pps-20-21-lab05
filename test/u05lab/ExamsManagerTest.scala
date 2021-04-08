@@ -13,28 +13,28 @@ class ExamsManagerTest {
   @Test
   def testExamResultBasicBehaviour(){
     // esame fallito, non c'è voto
-    assertEquals(ExamResultFactory.failed.kind, Kind.FAILED)
-    assertFalse(ExamResultFactory.failed.evaluation.isDefined)
-    assertFalse(ExamResultFactory.failed.cumLaude)
-    assertEquals(ExamResultFactory.failed.toString(), "FAILED")
+    assertEquals(erf.failed.kind, Kind.FAILED)
+    assertFalse(erf.failed.evaluation.isDefined)
+    assertFalse(erf.failed.cumLaude)
+    assertEquals(erf.failed.toString(), "FAILED")
 
     // lo studente si è ritirato, non c'è voto
-    assertEquals(ExamResultFactory.retired.kind, Kind.RETIRED)
-    assertFalse(ExamResultFactory.retired.evaluation.isDefined)
-    assertFalse(ExamResultFactory.retired.cumLaude)
-    assertEquals(ExamResultFactory.retired.toString(), "RETIRED")
+    assertEquals(erf.retired.kind, Kind.RETIRED)
+    assertFalse(erf.retired.evaluation.isDefined)
+    assertFalse(erf.retired.cumLaude)
+    assertEquals(erf.retired.toString(), "RETIRED")
 
     //28
-    assertEquals(ExamResultFactory.succeeded(28).kind, Kind.SUCCEEDED)
-    assertEquals(ExamResultFactory.succeeded(28).evaluation.get, 28)
-    assertFalse(ExamResultFactory.succeeded(28).cumLaude)
-    assertEquals(ExamResultFactory.succeeded(28).toString(), "SUCCEEDED(28)")
+    assertEquals(erf.succeeded(28).kind, Kind.SUCCEEDED)
+    assertEquals(erf.succeeded(28).evaluation.get, 28)
+    assertFalse(erf.succeeded(28).cumLaude)
+    assertEquals(erf.succeeded(28).toString(), "SUCCEEDED(28)")
 
     //30
-    assertEquals(ExamResultFactory.succeededCumLaude.kind, Kind.SUCCEEDED)
-    assertEquals(ExamResultFactory.succeededCumLaude.evaluation.get, 30)
-    assertTrue(ExamResultFactory.succeededCumLaude.cumLaude)
-    assertEquals(ExamResultFactory.succeededCumLaude.toString(), "SUCCEEDED(30L)")
+    assertEquals(erf.succeededCumLaude.kind, Kind.SUCCEEDED)
+    assertEquals(erf.succeededCumLaude.evaluation.get, 30)
+    assertTrue(erf.succeededCumLaude.cumLaude)
+    assertEquals(erf.succeededCumLaude.toString(), "SUCCEEDED(30L)")
   }
 
   @Test
@@ -60,31 +60,31 @@ class ExamsManagerTest {
       def testExamsManagement() {
   		this.testPrepareExams();
 //  		// partecipanti agli appelli di gennaio e marzo
-//  		assertEquals(em.getAllStudentsFromCall("gennaio"),new HashSet<>(Arrays.asList("rossi","bianchi","verdi","neri")));
-//  		assertEquals(em.getAllStudentsFromCall("marzo"),new HashSet<>(Arrays.asList("rossi","bianchi","viola")));
+  		assertEquals(em.getAllStudentsFromCall("gennaio"),Set("rossi","bianchi","verdi","neri"))
+  		assertEquals(em.getAllStudentsFromCall("marzo"),Set("rossi","bianchi","viola"))
 //
 //  		// promossi di gennaio con voto
-//  		assertEquals(em.getEvaluationsMapFromCall("gennaio").size(),2);
-//  		assertEquals(em.getEvaluationsMapFromCall("gennaio").get("verdi"),28);
-//  		assertEquals(em.getEvaluationsMapFromCall("gennaio").get("neri"),30);
+  		assertEquals(2, em.getEvaluationsMapFromCall("gennaio").size)
+      assertEquals(28, em.getEvaluationsMapFromCall("gennaio")("verdi"))
+  		assertEquals(30, em.getEvaluationsMapFromCall("gennaio")("neri"))
 //  		// promossi di febbraio con voto
-//  		assertEquals(em.getEvaluationsMapFromCall("febbraio").size(),2);
-//  		assertEquals(em.getEvaluationsMapFromCall("febbraio").get("bianchi"),20);
-//  		assertEquals(em.getEvaluationsMapFromCall("febbraio").get("verdi"),30);
+  		assertEquals(2, em.getEvaluationsMapFromCall("febbraio").size)
+  		assertEquals(20, em.getEvaluationsMapFromCall("febbraio")("bianchi"))
+  		assertEquals(30, em.getEvaluationsMapFromCall("febbraio")("verdi"))
 //
 //  		// tutti i risultati di rossi (attenzione ai toString!!)
-//  		assertEquals(em.getResultsMapFromStudent("rossi").size(),3);
-//  		assertEquals(em.getResultsMapFromStudent("rossi").get("gennaio"),"FAILED");
-//  		assertEquals(em.getResultsMapFromStudent("rossi").get("febbraio"),"FAILED");
-//  		assertEquals(em.getResultsMapFromStudent("rossi").get("marzo"),"SUCCEEDED(25)");
+      assertEquals(3, em.getResultsMapFromStudent("rossi").size);
+        assertEquals("FAILED", em.getResultsMapFromStudent("rossi")("gennaio"))
+  		assertEquals("FAILED", em.getResultsMapFromStudent("rossi")("febbraio"))
+  		assertEquals("SUCCEEDED(25)", em.getResultsMapFromStudent("rossi")("marzo"))
 //  		// tutti i risultati di bianchi
-//  		assertEquals(em.getResultsMapFromStudent("bianchi").size(),3);
-//  		assertEquals(em.getResultsMapFromStudent("bianchi").get("gennaio"),"RETIRED");
-//  		assertEquals(em.getResultsMapFromStudent("bianchi").get("febbraio"),"SUCCEEDED(20)");
-//  		assertEquals(em.getResultsMapFromStudent("bianchi").get("marzo"),"SUCCEEDED(25)");
+    	assertEquals(3, em.getResultsMapFromStudent("bianchi").size)
+  		assertEquals("RETIRED", em.getResultsMapFromStudent("bianchi")("gennaio"))
+  		assertEquals("SUCCEEDED(20)", em.getResultsMapFromStudent("bianchi")("febbraio"))
+  		assertEquals("SUCCEEDED(25)", em.getResultsMapFromStudent("bianchi")("marzo"))
 //  		// tutti i risultati di neri
-//  		assertEquals(em.getResultsMapFromStudent("neri").size(),1);
-//  		assertEquals(em.getResultsMapFromStudent("neri").get("gennaio"),"SUCCEEDED(30L)");
+  		assertEquals(1, em.getResultsMapFromStudent("neri").size);
+  		assertEquals("SUCCEEDED(30L)", em.getResultsMapFromStudent("neri")("gennaio"));
   	}
 
 

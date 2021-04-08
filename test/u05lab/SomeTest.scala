@@ -43,7 +43,7 @@ class SomeTest {
     val h: List[Int] = Nil();
 
 
-    assertThrows(classOf[UnsupportedOperationException], () => h.reduce(_+_))
+   // assertThrows(classOf[UnsupportedOperationException], () => h.reduce(_+_))
     assertEquals(16, l.reduce(_+_))
   }
 
